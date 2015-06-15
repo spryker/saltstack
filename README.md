@@ -35,15 +35,14 @@ You can always merge changes from the reference repositories, but from the begin
 
 1. Copy the contents of private key from file `dev` and paste them to your pillar repository, into file `dev/app/init.sls`,
     as key `server_env:ssh:id_rsa`. Watch out for correct indentations in the yaml file! E.g.:
-
-        ```
-        server_env:
-          ssh:
-            id_rsa: |
-              -----BEGIN RSA PRIVATE KEY-----
-              XXxxXXxxXXxxXXxxXXxxXXxxXXxxXXxxXXxx
-              -----END RSA PRIVATE KEY-----
-        ```
+    ```
+    server_env:
+      ssh:
+        id_rsa: |
+          -----BEGIN RSA PRIVATE KEY-----
+          XXxxXXxxXXxxXXxxXXxxXXxxXXxxXXxxXXxx
+          -----END RSA PRIVATE KEY-----
+    ```
 
 1. Remove the temporary directory with key files from your local hard drive:
     ```
