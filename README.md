@@ -1,3 +1,15 @@
+# Reference saltstack repository for Spryker
+This repository contains salt states (implementation) for Spryker SaltStack.
+It is a reference repository, which should be cloned and used as a base for
+specific projects. Please see steps below for information how to create a new
+project, including security credentials.
+
+# Documentation
+For working with SaltStack you should familiarize yourself with at least basic
+concepts of this technology. The best way to start is to read the official
+[SaltStack tutorials](http://docs.saltstack.com/en/latest/topics/tutorials/index.html).
+
+
 # Creating new Spryker project
 
 1. Clone `spryker` code repository
