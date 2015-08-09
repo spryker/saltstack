@@ -34,3 +34,8 @@ clone-oh-my-zsh:
     - dir_mode: 755
 
 
+# Manually sync host to Vagrant Host
+/etc/cron.d/vagrant-ntpdate:
+  file.managed:
+    - source: salt://development/files/etc/cron.d/vagrant-ntpdate
+
