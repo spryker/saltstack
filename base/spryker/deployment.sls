@@ -69,6 +69,6 @@
 # then extract public ssh key file from private key file, so that ssh root@localhost will work
 extract-root-private-ssh-key:
   cmd.run:
-    - name: ssh-keygen -y -f /root/.ssh/id_rsa > /root/.ssh/authorized_keys
+    - name: ssh-keygen -N '' -y -f /root/.ssh/id_rsa > /root/.ssh/authorized_keys
     - unless: test -f /root/.ssh/authorized_keys
 {% endif %}
