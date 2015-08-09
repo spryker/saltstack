@@ -69,4 +69,4 @@ elk-elasticsearch-service:
 elasticsearch:
   service.dead:
     - enable: False
-{% end %}
+{% endif %}

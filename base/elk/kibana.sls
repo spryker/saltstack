@@ -16,4 +16,4 @@ logstash-web:
     - require:
       - pkg: logstash-kibana-package
 
-{%- end %}
+{%- endif %}

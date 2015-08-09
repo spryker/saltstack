@@ -22,4 +22,4 @@ logstash:
     - watch_in:
       - service: logstash
 
-{%- end %}
+{%- endif %}
