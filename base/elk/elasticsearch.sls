@@ -66,7 +66,8 @@ elk-elasticsearch-service:
 
 
 {%- else %}
-elasticsearch:
+elk-elasticsearch-service:
   service.dead:
+    - name: elasticsearch
     - enable: False
 {% endif %}
