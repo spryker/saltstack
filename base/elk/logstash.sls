@@ -2,6 +2,8 @@
 # Setup and run logstash
 #
 
+{%- if salt['pillar.get']('elk:enabled', "False") %}
+
 logstash:
   pkg:
     - installed
@@ -19,3 +21,5 @@ logstash:
       - pkg: logstash
     - watch_in:
       - service: logstash
+
+{%- end %}

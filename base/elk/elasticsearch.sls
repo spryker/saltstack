@@ -4,6 +4,8 @@
 #
 # Takes configuration from pillar.elasticsearch
 
+{%- if salt['pillar.get']('elk:enabled', "False") %}
+
 elk-elasticsearch-requirements:
   pkg.installed:
     - pkgs:
@@ -61,3 +63,10 @@ elk-elasticsearch-service:
     - watch_in:
       - service: elasticsearch-service
 {% endfor %}
+
+
+{%- else %}
+elasticsearch:
+  service.dead:
+    - enable: False
+{% end %}
