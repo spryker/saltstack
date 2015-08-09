@@ -64,6 +64,8 @@
       environment: {{ environment }}
       environment_details: {{ environment_details }}
       settings: {{ settings }}
+    - require:
+      - file: /etc/elasticsearch-{{ environment }}
     - watch_in:
       - service: elasticsearch-{{ environment }}
 
@@ -78,6 +80,8 @@
     - template: jinja
     - context:
       environment: {{ environment }}
+    - require:
+      - file: /etc/elasticsearch-{{ environment }}
     - watch_in:
       - service: elasticsearch-{{ environment }}
 
@@ -91,10 +95,15 @@ elasticsearch-{{ environment }}:
       - file: /etc/init.d/elasticsearch-{{ environment }}
       - file: /data/shop/{{ environment }}/shared/elasticsearch
       - file: /data/logs/{{ environment }}/elasticsearch
+      - file: /etc/default/elasticsearch-{{ environment }}
+      - file: /etc/elasticsearch-{{ environment }}/elasticsearch.yml
+      - file: /etc/elasticsearch-{{ environment }}/logging.yml
 
 # Symlink for easier location of ES configs
 /etc/elasticsearch/{{ environment }}:
   file.symlink:
     - target: /etc/elasticsearch-{{ environment }}
-
+    - require:
+      - file: /etc/elasticsearch-{{ environment }}
+      
 {%- endmacro %}
