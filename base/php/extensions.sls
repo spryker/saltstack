@@ -68,9 +68,12 @@ xhprof:
   file.absent
 
 
-{% if 'development' not in grains.roles %}
+{% if salt['pillar.get']('php:enable_opcache', True) %}
 {{ php_module('opcache', true, 'fpm') }}
 {{ php_module('opcache', true, 'cli') }}
+{% else %}
+{{ php_module('opcache', false, 'fpm') }}
+{{ php_module('opcache', false, 'cli') }}
 {% endif %}
 
 # Install CTwig extension
