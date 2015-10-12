@@ -3,10 +3,19 @@
 # For production setup, a high-available solution or DBaaS (database-as-a-service) should be used
 #
 
+{% set mysql_package_name = {
+    'wheezy': 'mysql-server-5.6',
+    'jessie': 'mariadb-server-10.0',
+}.get(grains.lsb_distrib_codename) %}
+
+{%- if grains.lsb_distrib_codename == 'wheezy' %}
+{%- set mysql_package = 'mysql-server-5.6' %}
+{%- endif %}
+
 mysql-server:
   pkg:
     - installed
-    - name: mysql-server-5.6
+    - name: {{ mysql_package_name }}
 
 mysql:
   service:

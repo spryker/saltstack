@@ -10,3 +10,8 @@ salt-minion:
   file.managed:
     - name: /etc/salt/minion.d/mine.conf
     - source: salt://system/files/etc/salt/minion.d/mine.conf
+
+sync-grains:
+  module.run:
+    - name: saltutil.sync_grains
+    - refresh: True

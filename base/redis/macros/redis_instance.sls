@@ -8,14 +8,35 @@
     - user: redis
     - group: redis
     - mode: 700
-    - makedirs: true
+    - require:
+      - file: /data/shop/{{ environment }}/shared
 
 /data/logs/{{ environment }}/redis:
   file.directory:
     - user: redis
     - group: redis
     - mode: 755
-    - makedirs: True
+    - require:
+      - file: /data/logs/{{ environment }}
+
+{%- if 'systemd' in grains %}
+{%- set service_name = 'redis-server-' + environment %}
+/etc/systemd/system/redis-server-{{ environment }}.service:
+  file.managed:
+    - template: jinja
+    - source: salt://redis/files/etc/systemd/system/redis-server.service
+    - context:
+      environment: {{ environment }}
+
+redis-server-{{ environment }}:
+  service.running:
+    - enable: True
+    - require:
+      - file: /etc/systemd/system/redis-server-{{ environment }}.service
+
+{%- else %}
+{%- set service_name = 'redis-services' %}
+{%- endif %}
 
 /etc/redis/redis_{{ environment }}.conf:
   file.managed:
@@ -32,6 +53,5 @@
       - file: /data/shop/{{ environment }}/shared/redis
       - file: /data/logs/{{ environment }}/redis
     - watch_in:
-      - service: redis-server
-
+      - service: {{ service_name }}
 {%- endmacro %}

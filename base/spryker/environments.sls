@@ -6,17 +6,21 @@
 {% from 'spryker/macros/jenkins_instance.sls' import jenkins_instance with context %}
 
 {%- for environment, environment_details in pillar.environments.items() %}
-/data/shop/{{ environment }}/:
+/data/shop/{{ environment }}:
   file.directory:
     - user: www-data
     - group: www-data
     - dir_mode: 755
+    - require:
+      - file: /data/shop
 
 /data/shop/{{ environment }}/shared:
   file.directory:
     - user: www-data
     - group: www-data
     - dir_mode: 755
+    - require:
+      - file: /data/shop/{{ environment }}
 
 # Create environment directory structure
 /data/shop/{{ environment }}/shared/Generated:
@@ -25,7 +29,8 @@
     - group: www-data
     - dir_mode: 755
     - file_mode: 755
-    - makedirs: true
+    - require:
+      - file: /data/shop/{{ environment }}/shared
 
 /data/shop/{{ environment }}/shared/data/common:
   file.directory:
@@ -33,7 +38,9 @@
     - group: www-data
     - dir_mode: 755
     - file_mode: 755
-    - makedirs: true
+    - makedirs: True
+    - require:
+      - file: /data/shop/{{ environment }}/shared
 
 /data/logs/{{ environment }}:
   file.directory:
@@ -41,7 +48,8 @@
     - group: www-data
     - dir_mode: 755
     - file_mode: 755
-    - makedirs: true
+    - require:
+      - file: /data/logs
 
 # If we do not use cloud object storage, then this directory should be shared
 # between servers (using technology like NFS or GlusterFS, not included here).
@@ -52,6 +60,8 @@
     - dir_mode: 755
     - file_mode: 755
     - makedirs: true
+    - require:
+      - file: /data/storage
 
 /data/shop/{{ environment }}/shared/data/static:
   file.symlink:
@@ -65,6 +75,19 @@
 /data/shop/{{ environment }}/shared/config_local.php:
   file.managed:
     - source: salt://spryker/files/config/config_local.php
+    - template: jinja
+    - user: www-data
+    - group: www-data
+    - mode: 644
+    - require:
+      - file: /data/shop/{{ environment }}/shared/data/common
+    - context:
+      environment: {{ environment }}
+      settings: {{ settings }}
+
+/data/shop/{{ environment }}/shared/console_env_local.php:
+  file.managed:
+    - source: salt://spryker/files/config/console_env_local.php
     - template: jinja
     - user: www-data
     - group: www-data

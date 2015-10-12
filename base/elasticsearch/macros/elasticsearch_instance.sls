@@ -10,8 +10,7 @@
     - user: elasticsearch
     - group: elasticsearch
     - mode: 700
-    - requires:
-      - file: /data/shop/{{ environment }}/shared
+    - makedirs: True
 
 # Log directory
 /data/logs/{{ environment }}/elasticsearch:
@@ -19,6 +18,7 @@
     - user: elasticsearch
     - group: elasticsearch
     - mode: 755
+    - makedirs: True
 
 # Service configuration
 /etc/default/elasticsearch-{{ environment }}:
@@ -85,7 +85,14 @@
     - watch_in:
       - service: elasticsearch-{{ environment }}
 
-# Setvice
+# Symlink for easier location of ES configs
+/etc/elasticsearch/{{ environment }}:
+  file.symlink:
+    - target: /etc/elasticsearch-{{ environment }}
+    - require:
+      - file: /etc/elasticsearch-{{ environment }}
+
+# Service
 elasticsearch-{{ environment }}:
   service:
     - running
@@ -98,12 +105,6 @@ elasticsearch-{{ environment }}:
       - file: /etc/default/elasticsearch-{{ environment }}
       - file: /etc/elasticsearch-{{ environment }}/elasticsearch.yml
       - file: /etc/elasticsearch-{{ environment }}/logging.yml
+      - file: /etc/elasticsearch/{{ environment }}
 
-# Symlink for easier location of ES configs
-/etc/elasticsearch/{{ environment }}:
-  file.symlink:
-    - target: /etc/elasticsearch-{{ environment }}
-    - require:
-      - file: /etc/elasticsearch-{{ environment }}
-      
 {%- endmacro %}

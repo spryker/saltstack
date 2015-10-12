@@ -1,11 +1,16 @@
 #
-# Install Ruby 1.9 and used gems
+# Install Ruby and used gems
 #
+
+{% set ruby_package_name = {
+    'wheezy': 'ruby1.9.1',
+    'jessie': 'ruby',
+}.get(grains.lsb_distrib_codename) %}
 
 ruby:
   pkg.installed:
     - pkgs:
-      - ruby1.9.1
+      - {{ ruby_package_name }}
       - ruby-dev
       - libncurses5-dev
       - build-essential

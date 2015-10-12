@@ -9,6 +9,7 @@ install helper app utilities:
     - pkgs:
       - graphviz
       - libjpeg-progs
+      - libavahi-compat-libdnssd-dev
 
 /data/shop:
   file.directory:

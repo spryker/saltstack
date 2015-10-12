@@ -38,6 +38,8 @@
       environment: {{ environment }}
       settings: {{ settings }}
       store: {{ store }}
+    - require:
+      - file: /data/logs/{{ environment }}
     - watch_in:
       - cmd: reload-nginx
 
@@ -52,6 +54,8 @@
       environment: {{ environment }}
       settings: {{ settings }}
       store: {{ store }}
+    - require:
+      - file: /data/logs/{{ environment }}
     - watch_in:
       - cmd: reload-nginx
 

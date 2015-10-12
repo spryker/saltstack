@@ -18,8 +18,10 @@ mailcatcher-init-script:
 mailcatcher:
   gem:
     - installed
-  service:
-    - running
+
+mailcatcher-service:
+  service.running:
+    - name: mailcatcher
     - enable: True
     - require:
       - file: mailcatcher-init-script
