@@ -2,6 +2,11 @@
 # Install PHP and modules available from operating system distribution
 #
 
+{% set php5_ssh_package_name = {
+    'wheezy': 'php5-ssh2',
+    'jessie': 'libssh2-php',
+}.get(grains.lsb_distrib_codename) %}
+
 php:
   pkg.installed:
     - pkgs:
@@ -19,6 +24,6 @@ php:
       - php5-mysql
       - php5-pgsql
       - php5-redis
-      - php5-ssh2
       - php5-sqlite
       - php-pear
+      - {{ php5_ssh_package_name }}

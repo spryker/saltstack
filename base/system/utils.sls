@@ -2,7 +2,7 @@
 # Install utility debian packages
 #
 
-base:
+base-utilities:
   pkg.installed:
     - pkgs:
       - git
@@ -19,3 +19,10 @@ base:
       - telnet
       - make
       - python-apt
+      - vim
+    - require:
+      - cmd: apt-get-update
+
+git:
+  pkg.installed:
+    - fromrepo: git-repo

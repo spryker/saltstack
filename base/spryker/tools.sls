@@ -8,8 +8,8 @@
 
 reload-php-fpm:
   cmd.wait:
-    - name: /etc/init.d/php5-fpm reload
+    - name: service php5-fpm restart
 
 reload-nginx:
   cmd.wait:
-    - name: /etc/init.d/nginx reload
+    - name: service nginx restart

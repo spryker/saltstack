@@ -51,14 +51,6 @@
       environment_details: {{ environment_details }}
       settings: {{ settings }}
 
-# Service
-jenkins-{{ environment }}:
-  service.running:
-    - enable: True
-    - require:
-      - file: /etc/default/jenkins-{{ environment }}
-      - file: /etc/init.d/jenkins-{{ environment }}
-
 # Dir permissions for unpacking .war file
 /var/cache/jenkins-{{ environment }}:
   file.directory:
@@ -69,5 +61,16 @@ jenkins-{{ environment }}:
     - recurse:
       - user
       - group
+
+# Service
+jenkins-{{ environment }}:
+  service.running:
+    - enable: True
+    - require:
+      - pkg: jenkins
+      - file: /etc/default/jenkins-{{ environment }}
+      - file: /etc/init.d/jenkins-{{ environment }}
+      - file: /var/cache/jenkins-{{ environment }}
+
 
 {%- endmacro %}

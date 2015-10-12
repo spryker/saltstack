@@ -17,7 +17,7 @@ include:
 rackspace-monitoring:
   pkgrepo.managed:
     - humanname: Rackspace monitoring tools
-    - name: deb http://stable.packages.cloudmonitoring.rackspace.com/debian-wheezy-x86_64 cloudmonitoring main
+    - name: deb http://stable.packages.cloudmonitoring.rackspace.com/debian-{{ grains.lsb_distrib_codename }}-x86_64 cloudmonitoring main
     - file: /etc/apt/sources.list.d/rackspace-monitoring.list
     - key_url: https://monitoring.api.rackspacecloud.com/pki/agent/linux.asc
     - require_in:

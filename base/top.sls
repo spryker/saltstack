@@ -18,7 +18,6 @@ prod:
     - match: grain
     - php
     - spryker
-    - elk.logstash
     - nodejs
 
   # nginx and web components
@@ -35,7 +34,6 @@ prod:
     - java
     - jenkins
     - newrelic.php
-    - elk.logstash
 
   # elasticsearch (for spryker data)
   'roles:elasticsearch':
@@ -60,15 +58,6 @@ prod:
   'roles:mysql':
     - match: grain
     - mysql-server
-
-  # ELK stack
-  'roles:elk_elasticsearch':
-    - match: grain
-    - java
-    - elk.elasticsearch
-  'roles:elk_kibana':
-    - match: grain
-    - elk.kibana
 
 # Production setup - we apply specific states to machines
 qa:
@@ -86,7 +75,6 @@ qa:
     - match: grain
     - php
     - spryker
-    - elk.logstash
     - nodejs
 
   # nginx and web components
@@ -103,7 +91,6 @@ qa:
     - java
     - jenkins
     - newrelic.php
-    - elk.logstash
 
   # elasticsearch (for spryker data)
   'roles:elasticsearch':
@@ -129,14 +116,12 @@ qa:
     - match: grain
     - mysql-server
 
-  # ELK stack
-  'roles:elk_elasticsearch':
+base:
+  '*':
+    - system
+    - user
+  'roles:salt_master':
     - match: grain
-    - java
-    - elk.elasticsearch
-  'roles:elk_kibana':
-    - match: grain
-    - elk.kibana
 
 
 dev:
@@ -160,5 +145,4 @@ dev:
     - jenkins
     - redis
     - elasticsearch
-    - elk
     - spryker

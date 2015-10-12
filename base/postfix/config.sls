@@ -10,8 +10,6 @@
     - user: root
     - group: root
     - mode: 644
-    - context:
-        postfix: {{ pillar.postfix }}
     - require:
       - pkg: postfix
     - watch_in:
@@ -34,8 +32,6 @@
    - user: root
    - group: root
    - mode: 644
-   - defaults:
-       postfix: {{ pillar.postfix }}
 
 run-postmap:
   cmd.wait:

@@ -7,6 +7,10 @@
 #
 
 include:
+  - .filesystems
+{%- if 'systemd' in grains %}
+  - .systemd
+{%- endif %}
   - .repositories
   - .minion
   - .utils

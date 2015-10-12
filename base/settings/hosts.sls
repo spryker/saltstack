@@ -15,26 +15,34 @@
 # Use mine to fetch IP adresses from minions. Get the IP address of project_interface.
 {%-   set netif = salt['pillar.get']('hosting:project_network_interface', 'lo') %}
 
+# Limit mine search: only same host (qa), only same environment (non-qa)
+{%-   if grains.environment == 'qa' %}
+{%-     set envmatch = ' and G@id:' + grains.id %}
+{%-   else %}
+{%-     set envmatch = ' and G@environment:' + grains.environment %}
+{%-   endif %}
+
+
 # Get IP's of specific roles from mine.get of running instances
 {%-   set app_hosts = [] %}
-{%-   for hostname, network_settings in salt['mine.get']('roles:app', 'network.interfaces', expr_form = 'grain').items() %}
+{%-   for hostname, network_settings in salt['mine.get']('G@roles:app' + envmatch, 'network.interfaces', expr_form = 'compound').items() %}
 {%-     do app_hosts.append(network_settings[netif]['inet'][0]['address']) %}
 {%-   endfor %}
 
 {%-   set web_hosts = [] %}
-{%-   for hostname, network_settings in salt['mine.get']('roles:web', 'network.interfaces', expr_form = 'grain').items() %}
+{%-   for hostname, network_settings in salt['mine.get']('G@roles:web' + envmatch, 'network.interfaces', expr_form = 'compound').items() %}
 {%-     do web_hosts.append(network_settings[netif]['inet'][0]['address']) %}
 {%-   endfor %}
 
 {%-   set job_hosts = [] %}
-{%-   for hostname, network_settings in salt['mine.get']('roles:cronjobs', 'network.interfaces', expr_form = 'grain').items() %}
+{%-   for hostname, network_settings in salt['mine.get']('G@roles:cronjobs' + envmatch, 'network.interfaces', expr_form = 'compound').items() %}
 {%-     do job_hosts.append(network_settings[netif]['inet'][0]['address']) %}
 {%-   endfor %}
 
 
 {%-   if salt['pillar.get']('hosting:external_elasticsearch', '') == '' %}
 {%-     set es_data_hosts = [] %}
-{%-     for hostname, network_settings in salt['mine.get']('roles:elasticsearch_data', 'network.interfaces', expr_form = 'grain').items() %}
+{%-     for hostname, network_settings in salt['mine.get']('G@roles:elasticsearch' + envmatch, 'network.interfaces', expr_form = 'compound').items() %}
 {%-       do es_data_hosts.append(network_settings[netif]['inet'][0]['address']) %}
 {%-     endfor %}
 {%-   else %}
@@ -42,21 +50,21 @@
 {%-   endif %}
 
 {%-   if salt['pillar.get']('hosting:external_rabbitmq', '') == '' %}
-{%-     set queue_host = salt['mine.get']('roles:queue', 'network.interfaces', expr_form = 'grain').items()[0][1][netif]['inet'][0].address %}
+{%-     set queue_host = salt['mine.get']('G@roles:queue' + envmatch, 'network.interfaces', expr_form = 'compound').items()[0][1][netif]['inet'][0].address %}
 {%-   else %}
 {%-     set queue_host = salt['pillar.get']('hosting:external_rabbitmq') %}
 {%-   endif %}
 
 
 {%-   set es_log_hosts = [] %}
-{%-   for hostname, network_settings in salt['mine.get']('roles:elasticsearch', 'network.interfaces', expr_form = 'grain').items() %}
+{%-   for hostname, network_settings in salt['mine.get']('G@roles:elk_elasticsearch' + envmatch, 'network.interfaces', expr_form = 'compound').items() %}
 {%-     do es_log_hosts.append(network_settings[netif]['inet'][0]['address']) %}
 {%-   endfor %}
 
-{%-   set cron_master_host = salt['mine.get']('roles:cronjobs', 'network.interfaces', expr_form = 'grain').items()[0][1][netif]['inet'][0].address %}
+{%-   set cron_master_host = salt['mine.get']('G@roles:cronjobs' + envmatch, 'network.interfaces', expr_form = 'compound').items()[0][1][netif]['inet'][0].address %}
 {%-   set publish_ip = grains.ip_interfaces[netif]|first %}
 {%-   if salt['pillar.get']('hosting:external_redis', '') == '' %}
-{%-     set redis_host = salt['mine.get']('roles:redis', 'network.interfaces', expr_form = 'grain').items()[0][1][netif]['inet'][0].address %}
+{%-     set redis_host = salt['mine.get']('G@roles:redis' + envmatch, 'network.interfaces', expr_form = 'compound').items()[0][1][netif]['inet'][0].address %}
 {%-   else %}
 {%-     set redis_host = salt['pillar.get']('hosting:external_redis') %}
 {%-   endif %}

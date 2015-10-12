@@ -11,8 +11,3 @@ net.core.somaxconn:
 vm.swappiness:
   sysctl.present:
     - value: 5
-
-# Make sure that redis bgsave can overcommit virtual memory
-vm.overcommit_memory:
-  sysctl.present:
-    - value: 1

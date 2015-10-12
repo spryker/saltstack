@@ -5,31 +5,38 @@
  */
 use SprykerFeature\Shared\System\SystemConfig;
 use SprykerFeature\Shared\Yves\YvesConfig;
-use SprykerFeature\Shared\Payone\PayoneConfig;
 
 $environment = '{{ environment }}';
 
-$config[SystemConfig::ZED_MYSQL_USERNAME] =                '{{ settings.environments[environment].stores[store].zed.database.username }}';
-$config[SystemConfig::ZED_MYSQL_PASSWORD] =                '{{ settings.environments[environment].stores[store].zed.database.password }}';
-$config[SystemConfig::ZED_MYSQL_DATABASE] =                '{{ settings.environments[environment].stores[store].zed.database.database }}';
-$config[SystemConfig::ZED_MYSQL_HOST] =                    '{{ settings.environments[environment].stores[store].zed.database.hostname }}';
-$config[SystemConfig::ZED_MYSQL_PORT] =                    3306;
+/** Database credentials */
+$config[SystemConfig::ZED_DB_USERNAME] =                   '{{ settings.environments[environment].stores[store].zed.database.username }}';
+$config[SystemConfig::ZED_DB_PASSWORD] =                   '{{ settings.environments[environment].stores[store].zed.database.password }}';
+$config[SystemConfig::ZED_DB_DATABASE] =                   '{{ settings.environments[environment].stores[store].zed.database.database }}';
+$config[SystemConfig::ZED_DB_HOST] =                       '{{ settings.environments[environment].stores[store].zed.database.hostname }}';
+$config[SystemConfig::ZED_DB_PORT] =                       3306;
+$config[SystemConfig::PROPEL]['database']['connections']['default']['dsn'] = 'mysql:host=' . $config[SystemConfig::ZED_DB_HOST]  . ';dbname=' . $config[SystemConfig::ZED_DB_DATABASE];
 
 
-/** Public URL's and domains*/
+/** Public URL's and domains */
 $yvesHost =                                                '{{ settings.environments[environment].stores[store].yves.hostnames[0] }}';
 $config[SystemConfig::HOST_YVES] =                         'http://' . $yvesHost;
-$config[SystemConfig::HOST_STATIC_ASSETS] =
-    $config[SystemConfig::HOST_STATIC_MEDIA] =             $yvesHost;
-
 $config[SystemConfig::HOST_SSL_YVES] =                     'https://' . $yvesHost;
-$config[SystemConfig::HOST_SSL_STATIC_ASSETS] =            $config[SystemConfig::HOST_SSL_STATIC_MEDIA] = $yvesHost;
+$config[YvesConfig::YVES_SSL_ENABLED] =                    true;
+$config[YvesConfig::YVES_COMPLETE_SSL_ENABLED] =           true;
+
+$config[SystemConfig::HOST_STATIC_ASSETS] =
+    $config[SystemConfig::HOST_STATIC_MEDIA] =             '{{ settings.environments[environment].static.hostname }}';
+
+$config[SystemConfig::HOST_SSL_STATIC_ASSETS] =
+    $config[SystemConfig::HOST_SSL_STATIC_MEDIA] =         '{{ settings.environments[environment].static.hostname }}';
 
 $zedHost =                                                 '{{ settings.environments[environment].stores[store].zed.hostname }}';
 $config[SystemConfig::HOST_ZED_GUI] =                      'http://' . $zedHost;
 $config[SystemConfig::HOST_ZED_API] =                      $zedHost;
 $config[SystemConfig::HOST_SSL_ZED_GUI] =
-    = $config[SystemConfig::HOST_SSL_ZED_API] =            'https://' . $zedHost;
+    $config[SystemConfig::HOST_SSL_ZED_API] =              'https://' . $zedHost;
+$config[SystemConfig::ZED_SSL_ENABLED] =                   true;
+$config[SystemConfig::ZED_API_SSL_ENABLED] =               true;
 
 $config[YvesConfig::YVES_SESSION_COOKIE_DOMAIN] =          $yvesHost;
 

@@ -224,7 +224,6 @@ end
 def configure_hosts
   put_status "Configuring hosts"
 
-  # Version 1.0 uses "configure_host" action to setup solr as well
   hosts = $app_hosts || $zed_hosts
   result = multi_ssh_exec!(hosts, "cd #{$destination_release_dir} && su #{$www_user} -c \"#{$exec_foreach_store} #{$debug} deploy/configure_host\" ")
 end
@@ -245,10 +244,10 @@ def perform_migrations
 end
 
 def update_cdn
-  put_status "Update CDN"
+  put_status "Updating assets in CDN"
   hosts = $jobs_hosts || [$tools_host]
   host = hosts[0]
-  result = multi_ssh_exec!(host, "cd #{$destination_release_dir} && su #{$www_user} -c \"#{$exec_foreach_store} #{$debug} deploy/update_cdn\" ")
+  result = multi_ssh_exec(host, "cd #{$destination_release_dir} && su #{$www_user} -c \"#{$exec_foreach_store} #{$debug} deploy/update_cdn\" ")
 end
 
 def initialize_database
@@ -291,23 +290,23 @@ def deactivate_cronjobs
 end
 
 ###
-### KV-Store
+### KV-Store and Search-store reindexing
 ###
 
-def reindex_full
+def reindex_kv
   put_status "Reindexing KV-store"
   hosts = $jobs_hosts || [$tools_host]
   host = hosts[0]
-  if File.exists? "deploy/reindex_memcache"
-    puts yellow "Please rename deploy/reindex_memcache to deploy/reindex_kv  (workaround activated)"
-    script_name = "deploy/reindex_memcache"
-  else
-    script_name = "deploy/reindex_kv"
-  end
+  script_name = "deploy/reindex_kv"
   result = multi_ssh_exec(host, "cd #{$destination_release_dir} && [ -f #{script_name} ] && su #{$www_user} -c \"#{$exec_foreach_store} #{$debug} #{script_name}\" ")
+end
 
-  # Legacy - Yves+Zed 1.0
-  result = multi_ssh_exec($frontend_hosts, "cd #{$destination_release_dir} && [ -f deploy/reindex_memcache ] && su #{$www_user} -c \"#{$exec_foreach_store} #{$debug} deploy/reindex_memcache\" ") unless $frontend_hosts.nil?
+def reindex_search
+  put_status "Reindexing Search-store"
+  hosts = $jobs_hosts || [$tools_host]
+  host = hosts[0]
+  script_name = "deploy/reindex_search"
+  result = multi_ssh_exec(host, "cd #{$destination_release_dir} && [ -f #{script_name} ] && su #{$www_user} -c \"#{$exec_foreach_store} #{$debug} #{script_name}\" ")
 end
 
 def ask_reindex
@@ -316,7 +315,7 @@ def ask_reindex
     puts "Perform full reindex: #{value}"
     return value
   end
-  if choose_item_from_array("Perform FULL KV import? ", %w(yes no)) == "yes"
+  if choose_item_from_array("Perform FULL KV/Search import? ", %w(yes no)) == "yes"
     if $environment == "production"
       puts red "Warning, this will cause downtime while performing reindex."
       return false if choose_item_from_array("Proceed anyway? ", %w(yes no)) != "yes"
@@ -466,7 +465,8 @@ def perform_deploy
   deactivate_maintenance
   initialize_database
   activate_release
-  reindex_full if perform_full_import
+  reindex_kv if perform_full_import
+  reindex_search if perform_full_import
   activate_cronjobs
   send_notifications_after
   remove_lockfile
