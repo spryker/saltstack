@@ -257,6 +257,13 @@ def initialize_database
   result = multi_ssh_exec!(host, "cd #{$destination_release_dir} && [ -f deploy/initialize_database ] && su #{$www_user} -c \"#{$exec_foreach_store} #{$debug} deploy/initialize_database\" ")
 end
 
+def initialize_search
+  put_status "Initializing search"
+  hosts = $jobs_hosts || [$tools_host]
+  host = hosts[0]
+  result = multi_ssh_exec!(host, "cd #{$destination_release_dir} && [ -f deploy/initialize_search ] && su #{$www_user} -c \"#{$exec_foreach_store} #{$debug} deploy/initialize_search\" ")
+end
+
 def activate_maintenance
   put_status "Activating maintenance mode"
   hosts = $web_hosts || $frontend_hosts || $zed_hosts
@@ -464,6 +471,7 @@ def perform_deploy
   update_cdn
   deactivate_maintenance
   initialize_database
+  initialize_search
   activate_release
   reindex_kv if perform_full_import
   reindex_search if perform_full_import
