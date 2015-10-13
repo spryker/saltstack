@@ -8,10 +8,6 @@
     'jessie': 'mariadb-server-10.0',
 }.get(grains.lsb_distrib_codename) %}
 
-{%- if grains.lsb_distrib_codename == 'wheezy' %}
-{%- set mysql_package = 'mysql-server-5.6' %}
-{%- endif %}
-
 mysql-server:
   pkg:
     - installed
