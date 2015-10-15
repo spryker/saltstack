@@ -24,6 +24,7 @@ mysql:
 /etc/mysql/my.cnf:
   file.managed:
     - source: salt://mysql-server/files/etc/mysql/my.cnf
+    - template: jinja
 
 /etc/mysql/conf.d/strict.cnf:
   file.managed:
