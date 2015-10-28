@@ -139,7 +139,9 @@ dev:
     - php
     - java
     - development
-    - mailcatcher
+# disable mailcatcher for now, because it's init script isnt 100% systemd compliant
+# and this looks like provisioning of the VM fails
+#    - mailcatcher
     - nginx
     - pound
     - jenkins
