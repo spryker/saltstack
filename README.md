@@ -204,6 +204,6 @@ Examples:
  - 15000 - Production YVES, Germany, HTTP
  - 15101 - Production ZED, USA, HTTP
  - 13007 - Staging Jenkins, HTTP (no store specified - jenkins runs per-environment)
- - 10006 - Development Elasticsearch, HTTP (no store specified)
+ - 10005 - Development Elasticsearch, HTTP (no store specified)
 
 
