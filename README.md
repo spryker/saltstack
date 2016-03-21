@@ -87,15 +87,12 @@ Spryker development VM uses some domains:
  - www.(com|de).spryker.test
  - zed.(com|de).spryker.test
  - static.(com|de).spryker.test
- - kibana.spryker.dev
 Those DNS records point to private IP address assigned to the VM - 10.10.0.66.
 The VM also includes valid wildcard SSL certificates for both domains.
 
 The self-signed SSL certificate for spryker.dev is already in the VM and Pound configuration.
 
 ## Services in the VM:
-Kibana - http://kibana.spryker.dev:9292/
-Elasticsearch with logs - http://kibana.spryker.dev:9200/
 MailCatcher - http://kibana.spryker.dev:1080/
 
 
