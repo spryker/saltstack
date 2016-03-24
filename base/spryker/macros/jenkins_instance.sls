@@ -38,6 +38,13 @@
     - context:
       environment: {{ environment }}
 
+# Reload systemd on service creation
+jenkins-{{ environment }}-systemctl-reload:
+  cmd.wait:
+    - name: systemctl daemon-reload
+    - watch:
+      - file: /etc/init.d/jenkins-{{ environment }}
+
 # Service configuration
 /etc/default/jenkins-{{ environment }}:
   file.managed:
@@ -71,6 +78,6 @@ jenkins-{{ environment }}:
       - file: /etc/default/jenkins-{{ environment }}
       - file: /etc/init.d/jenkins-{{ environment }}
       - file: /var/cache/jenkins-{{ environment }}
-
+      - cmd: jenkins-{{ environment }}-systemctl-reload
 
 {%- endmacro %}

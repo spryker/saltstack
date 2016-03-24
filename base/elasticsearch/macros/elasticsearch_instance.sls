@@ -45,6 +45,13 @@
     - context:
       environment: {{ environment }}
 
+# Reload systemd on service creation
+elasticsearch-{{ environment }}-systemctl-reload:
+  cmd.wait:
+    - name: systemctl daemon-reload
+    - watch:
+      - file: /etc/init.d/elasticsearch-{{ environment }}
+
 # Configuration directory
 /etc/elasticsearch-{{ environment }}:
   file.directory:
@@ -106,5 +113,6 @@ elasticsearch-{{ environment }}:
       - file: /etc/elasticsearch-{{ environment }}/elasticsearch.yml
       - file: /etc/elasticsearch-{{ environment }}/logging.yml
       - file: /etc/elasticsearch/{{ environment }}
+      - cmd: elasticsearch-{{ environment }}-systemctl-reload
 
 {%- endmacro %}
