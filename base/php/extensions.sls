@@ -6,9 +6,7 @@
 {% from 'php/macros/php_module.sls' import php_module with context %}
 
 # If pillar enables xdebug - install and configure it
-# If pillar does not specify it - enable by default only on development
-{% set enable_xdebug_default = ('dev' in grains.roles) %}
-{% if salt['pillar.get']('php:enable_xdebug', enable_xdebug_default) %}
+{% if salt['pillar.get']('php:install_xdebug', False) %}
 xdebug:
   pecl.installed
 
@@ -21,15 +19,12 @@ xdebug:
     - require:
       - pecl: xdebug
 
-{{ php_module('xdebug', true, 'fpm') }}
-{{ php_module('xdebug', true, 'cli') }}
-{% else %}
-{{ php_module('xdebug', false, 'fpm') }}
-{{ php_module('xdebug', false, 'cli') }}
+{{ php_module('xdebug', salt['pillar.get']('php:enable_xdebug', False), 'fpm') }}
+{{ php_module('xdebug', salt['pillar.get']('php:enable_xdebug', False), 'cli') }}
 {% endif %}
 
 # If pillar enables xhprof - install and configure it
-{% if salt['pillar.get']('php:enable_xhprof', False) %}
+{% if salt['pillar.get']('php:install_xhprof', False) %}
 xhprof:
   pecl.installed:
     - preferred_state: beta
@@ -42,13 +37,10 @@ xhprof:
     - mode: 644
     - require:
       - pecl: xhprof
-{{ php_module('xhprof', true, 'fpm') }}
-{{ php_module('xhprof', true, 'cli') }}
-{% else %}
-{{ php_module('xhprof', false, 'fpm') }}
-{{ php_module('xhprof', false, 'cli') }}
-{% endif %}
 
+{{ php_module('xhprof', salt['pillar.get']('php:enable_xhprof', False), 'fpm') }}
+{{ php_module('xhprof', salt['pillar.get']('php:enable_xhprof', False), 'cli') }}
+{% endif %}
 
 
 # Configure Zend OpCache extension - no need to install, as it ships with
@@ -68,13 +60,8 @@ xhprof:
   file.absent
 
 
-{% if salt['pillar.get']('php:enable_opcache', True) %}
-{{ php_module('opcache', true, 'fpm') }}
-{{ php_module('opcache', true, 'cli') }}
-{% else %}
-{{ php_module('opcache', false, 'fpm') }}
-{{ php_module('opcache', false, 'cli') }}
-{% endif %}
+{{ php_module('opcache', salt['pillar.get']('php:enable_opcache', True), 'fpm') }}
+{{ php_module('opcache', salt['pillar.get']('php:enable_opcache', True), 'cli') }}
 
 # Install CTwig extension
 pear-ctwig-channel:

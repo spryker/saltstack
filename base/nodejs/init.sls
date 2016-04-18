@@ -1,7 +1,6 @@
 #
-# Install NodeJS and npm modules in global mode
+# Install NodeJS
 #
-
 nodejs:
   pkg.installed
 

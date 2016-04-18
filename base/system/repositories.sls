@@ -29,33 +29,11 @@ dotdeb:
     - watch_in:
        - cmd: apt-get-update
 
-{%- if grains.lsb_distrib_codename == "wheezy" %}
-dotdeb-php56:
-  pkgrepo.managed:
-    - humanname: DotDeb PHP-5.6 repo ({{ grains.lsb_distrib_codename }})
-    - name: deb http://packages.dotdeb.org {{ grains.lsb_distrib_codename }}-php56 all
-    - file: /etc/apt/sources.list.d/dotdeb-php56.list
-    - key_url: http://www.dotdeb.org/dotdeb.gpg
-    - refresh_db: False
-    - watch_in:
-       - cmd: apt-get-update
-{%- endif %}
-
 elasticsearch-repo:
   pkgrepo.managed:
     - humanname: Official Elasticsearch Repository
-    - name: deb http://packages.elasticsearch.org/elasticsearch/{{ salt['pillar.get']('elasticsearch:version', '1.4') }}/debian stable main
+    - name: deb http://packages.elastic.co/elasticsearch/2.x/debian stable main
     - file: /etc/apt/sources.list.d/elasticsearch.list
-    - key_url: http://packages.elasticsearch.org/GPG-KEY-elasticsearch
-    - refresh_db: False
-    - watch_in:
-       - cmd: apt-get-update
-
-logstash-repo:
-  pkgrepo.managed:
-    - humanname: Official Logstash Repository
-    - name: deb http://packages.elasticsearch.org/logstash/{{ salt['pillar.get']('logstash:version', '1.4') }}/debian stable main
-    - file: /etc/apt/sources.list.d/logstash.list
     - key_url: http://packages.elasticsearch.org/GPG-KEY-elasticsearch
     - refresh_db: False
     - watch_in:
@@ -73,8 +51,8 @@ logstash-repo:
 nodesource-node-repo:
   pkgrepo.managed:
     - humanname: NodeSource NodeJS repository
-    - name: deb https://deb.nodesource.com/node012 {{ grains.lsb_distrib_codename }} main
-    - file: /etc/apt/sources.list.d/nodesource-node.list
+    - name: deb https://deb.nodesource.com/node_5.x {{ grains.lsb_distrib_codename }} main
+    - file: /etc/apt/sources.list.d/nodesource.list
     - key_url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
     - refresh_db: False
     - watch_in:

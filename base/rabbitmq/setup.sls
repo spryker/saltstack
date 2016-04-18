@@ -5,8 +5,11 @@
 rabbitmq-server:
   pkg.installed:
     - name: rabbitmq-server
+
+rabbitmq-service:
   service.running:
-    - enable: true
+    - name: rabbitmq-server
+    - enable: {{ salt['pillar.get']('rabbitmq:enabled', True) }}
     - require:
       - pkg: rabbitmq-server
 
@@ -16,7 +19,3 @@ enable-rabbitmq-management:
     - unless: rabbitmq-plugins list | grep '\[[eE]\*\] rabbitmq_management '
     - require:
       - service: rabbitmq-server
-
-# Note, for web interface, an admin user must be created:
-# rabbitmqctl add_user admin <password>
-# rabbitmqctl set_user_tags admin administrator
