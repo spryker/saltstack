@@ -20,6 +20,13 @@
     - mode: 755
     - makedirs: True
 
+# Symlink for original log location, for gc.log
+/var/log/elasticsearch-{{ environment }}:
+  file.symlink:
+    - target: /data/logs/{{ environment }}/elasticsearch
+    - require:
+      - file: /data/logs/{{ environment }}/elasticsearch
+
 # Service configuration
 /etc/default/elasticsearch-{{ environment }}:
   file.managed:
@@ -92,6 +99,12 @@ elasticsearch-{{ environment }}-systemctl-reload:
     - watch_in:
       - service: elasticsearch-{{ environment }}
 
+# Configuration - (empty) scripts directory
+/etc/elasticsearch-{{ environment }}/scripts:
+  file.directory:
+    - require:
+      - file: /etc/elasticsearch-{{ environment }}
+
 # Symlink for easier location of ES configs
 /etc/elasticsearch/{{ environment }}:
   file.symlink:
@@ -110,9 +123,10 @@ elasticsearch-{{ environment }}:
       - file: /data/shop/{{ environment }}/shared/elasticsearch
       - file: /data/logs/{{ environment }}/elasticsearch
       - file: /etc/default/elasticsearch-{{ environment }}
+      - file: /etc/elasticsearch/{{ environment }}
       - file: /etc/elasticsearch-{{ environment }}/elasticsearch.yml
       - file: /etc/elasticsearch-{{ environment }}/logging.yml
-      - file: /etc/elasticsearch/{{ environment }}
+      - file: /etc/elasticsearch-{{ environment }}/scripts
       - cmd: elasticsearch-{{ environment }}-systemctl-reload
 
 {%- endmacro %}
