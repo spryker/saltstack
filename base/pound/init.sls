@@ -44,21 +44,21 @@ pound:
     - require:
       - file: /etc/pound/certs
 
-/etc/pound/certs/1star_local:
+/etc/pound/certs/2star_local:
   file.managed:
-    - source: salt://pound/files/etc/pound/certs/1star_local
+    - source: salt://pound/files/etc/pound/certs/2star_local
     - require:
       - file: /etc/pound/certs
 
-/etc/pound/certs/1star_local:
+/etc/pound/certs/3star_local:
   file.managed:
-    - source: salt://pound/files/etc/pound/certs/1star_local
+    - source: salt://pound/files/etc/pound/certs/3star_local
     - require:
       - file: /etc/pound/certs
 
-/etc/pound/certs/1star_local:
+/etc/pound/certs/4star_local:
   file.managed:
-    - source: salt://pound/files/etc/pound/certs/1star_local
+    - source: salt://pound/files/etc/pound/certs/4star_local
     - require:
       - file: /etc/pound/certs
 
