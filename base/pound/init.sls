@@ -10,9 +10,10 @@ pound:
     - require:
       - pkg: pound
       - file: /etc/default/pound
-      - file: /etc/pound/certs/star_project_yz_com
-      - file: /etc/pound/certs/star_project_yz_de
-      - file: /etc/pound/certs/star_spryker_dev
+      - file: /etc/pound/certs/1star_local
+      - file: /etc/pound/certs/2star_local
+      - file: /etc/pound/certs/3star_local
+      - file: /etc/pound/certs/4star_local
     - watch:
       - file: /etc/pound/pound.cfg
 
@@ -36,20 +37,26 @@ pound:
     - require:
       - pkg: pound
 
-/etc/pound/certs/star_project_yz_com:
+/etc/pound/certs/1star_local:
   file.managed:
-    - source: salt://pound/files/etc/pound/certs/star_project_yz_com
+    - source: salt://pound/files/etc/pound/certs/1star_local
     - require:
       - file: /etc/pound/certs
 
-/etc/pound/certs/star_project_yz_de:
+/etc/pound/certs/1star_local:
   file.managed:
-    - source: salt://pound/files/etc/pound/certs/star_project_yz_de
+    - source: salt://pound/files/etc/pound/certs/1star_local
     - require:
       - file: /etc/pound/certs
 
-/etc/pound/certs/star_spryker_dev:
+/etc/pound/certs/1star_local:
   file.managed:
-    - source: salt://pound/files/etc/pound/certs/star_spryker_dev
+    - source: salt://pound/files/etc/pound/certs/1star_local
+    - require:
+      - file: /etc/pound/certs
+
+/etc/pound/certs/1star_local:
+  file.managed:
+    - source: salt://pound/files/etc/pound/certs/1star_local
     - require:
       - file: /etc/pound/certs
