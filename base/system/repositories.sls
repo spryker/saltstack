@@ -29,6 +29,17 @@ dotdeb:
     - watch_in:
        - cmd: apt-get-update
 
+docker-repo:
+ pkgrepo.managed:
+   - humanname: Official Docker Repository
+   - name: deb https://apt.dockerproject.org/repo debian-{{ grains.lsb_distrib_codename }} main
+   - file: /etc/apt/sources.list.d/docker.list
+   - keyid: 58118E89F3A912897C070ADBF76221572C52609D
+   - keyserver: p80.pool.sks-keyservers.net
+   - refresh_db: False
+   - watch_in:
+      - cmd: apt-get-update
+
 elasticsearch-repo:
   pkgrepo.managed:
     - humanname: Official Elasticsearch Repository
