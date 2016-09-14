@@ -2,11 +2,16 @@
 # Install package, remove default service
 #
 
+# Here we use specific version of the package to avoid auth issues with Jenkins 2.0
 jenkins:
-  pkg:
-    - installed
-  service:
-    - dead
+  pkg.installed:
+    - hold: True
+    - sources:
+      - jenkins: http://pkg.jenkins-ci.org/debian-stable/binary/jenkins_1.651.1_all.deb
+
+disable-jenkins-service:
+  service.dead:
+    - name: jenkins
     - enable: False
     - require:
       - pkg: jenkins
