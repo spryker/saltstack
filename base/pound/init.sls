@@ -14,6 +14,7 @@ pound:
       - file: /etc/pound/certs/2star_local
       - file: /etc/pound/certs/3star_local
       - file: /etc/pound/certs/4star_local
+      - file: /etc/pound/certs/star_spryker_dev
     - watch:
       - file: /etc/pound/pound.cfg
 
@@ -58,5 +59,11 @@ pound:
 /etc/pound/certs/1star_local:
   file.managed:
     - source: salt://pound/files/etc/pound/certs/1star_local
+    - require:
+      - file: /etc/pound/certs
+
+/etc/pound/certs/star_spryker_dev:
+  file.managed:
+    - source: salt://pound/files/etc/pound/certs/star_spryker_dev
     - require:
       - file: /etc/pound/certs
