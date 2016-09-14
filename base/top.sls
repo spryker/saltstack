@@ -71,6 +71,7 @@ dev:
     - hosting
     - user
     - postfix
+    - docker
     - mysql-server
     - postgresql
     - rabbitmq
