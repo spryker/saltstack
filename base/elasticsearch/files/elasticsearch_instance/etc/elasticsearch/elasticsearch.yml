@@ -29,7 +29,7 @@ index.number_of_replicas: {{ settings.elasticsearch.replicas }}
 # path.work: /path/to/work
 # path.logs: /path/to/logs
 # path.plugins: /path/to/plugins
-
+path.repo: ["/data/shop/{{ environment }}/shared/elasticsearch/snapshots"]
 
 ################################### Memory ###################################
 
