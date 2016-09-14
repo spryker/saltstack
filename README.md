@@ -4,13 +4,13 @@ It is a reference repository, which should be cloned and used as a base for
 specific projects. Please see steps below for information how to create a new
 project, including security credentials.
 
-# Documentation
+## Documentation
 For working with SaltStack you should familiarize yourself with at least basic
 concepts of this technology. The best way to start is to read the official
 [SaltStack tutorials](http://docs.saltstack.com/en/latest/topics/tutorials/index.html).
 
 
-# Creating new Spryker project
+## Creating new Spryker project
 
 1. Clone `spryker` code repository
 
@@ -66,9 +66,9 @@ You can always merge changes from the reference repositories, but from the begin
     remove temp? y
     ```
 
-# Deployment
+## Deployment
 
-## Using AgentForwarding for deployment SSH keys
+### Using AgentForwarding for deployment SSH keys
 For previous Spryker/Yves&Zed project, we have been using "deployment ssh key", which allowed checking out code from github/codebase during deployment.
 As this is potential security issue, deployment key is not mandatory anymore. If the /etc/deploy/deploy.key file is present, the key will be used.
 If the file is not present, deployment will use SSH Agent Forwarding to use directly developer's key for getting the code from repositories.
@@ -79,7 +79,7 @@ If in doubt, there is always the possibility to fallback to deployment key in fi
 
 Background information: https://developer.github.com/guides/using-ssh-agent-forwarding/
 
-## IP Addresses and DNS records
+### IP Addresses and DNS records
 Spryker development VM uses some domains:
  - www.(com|de).spryker.dev
  - zed.(com|de).spryker.dev
@@ -92,11 +92,11 @@ The VM also includes valid wildcard SSL certificates for both domains.
 
 The self-signed SSL certificate for spryker.dev is already in the VM and Pound configuration.
 
-## Services in the VM:
+### Services in the VM:
 MailCatcher - http://kibana.spryker.dev:1080/
 
 
-## Notes for production deployments
+### Notes for production deployments
 This SaltStack repository includes all the components required to run multi-environment,
 multi-store setup of Spryker on development VM. It also can be used to setup QA and
 production environments. Some of the components in production need special care to provide
@@ -110,7 +110,7 @@ Those services are:
  with CDN feature (like S3+CloudFront, Rackspace Cloudfiles CDN)
 
 
-## Port numbering
+### Port numbering
 For all services, there is a constant port numbering scheme. Each has a meaning.
 The values from this document should be reflected in state base/settings/port_numbering.
 
@@ -118,7 +118,7 @@ The values from this document should be reflected in state base/settings/port_nu
 
 Where:
 
-### L - Listener
+#### L - Listener
 1 for applications with one / default listener only, 1/2/... for applications with more than one
 possible listenere (for example, Elasticsearch has both HTTP and Transport ports).
 
@@ -127,7 +127,7 @@ possible listenere (for example, Elasticsearch has both HTTP and Transport ports
 | 1      | default (*) / HTTP (NginX, Elasticsearch) |
 | 2      | Transport (Elasticsearch)                 |
 
-### E - Environment
+#### E - Environment
 The possible values for Environment should be updated in file:
 salt/base/settings/port_numbering.sls
 
@@ -139,7 +139,7 @@ salt/base/settings/port_numbering.sls
 | 0      | Development                               |
 
 
-### DD - AppDomain for multiple country instances
+#### DD - AppDomain for multiple country instances
 Default value: 00 (appropiate for ALL single-languages components)
 The possible values for AppDomain should be updated in file:
 salt/base/settings/port_numbering.sls
@@ -182,7 +182,7 @@ salt/base/settings/port_numbering.sls
 | 99     | (reserved) Europe         | EU    | en_UK            |
 
 
-### C - Component, from following list:
+#### C - Component, from following list:
 
 | ID     | Component                                 |
 | ------ | ----------------------------------------- |
