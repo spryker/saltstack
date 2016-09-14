@@ -9,6 +9,8 @@ environment:
     port: '3'
   testing:
     port: '1'
+  devtest:
+    port: '0'
   development:
     port: '0'
 

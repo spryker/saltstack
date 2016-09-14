@@ -98,6 +98,12 @@
       environment: {{ environment }}
       settings: {{ settings }}
 
+{%- if 'code_symlink' in environment_details %}
+/data/shop/{{ environment }}/current:
+  file.symlink:
+    - target: {{ environment_details.code_symlink }}
+{%- endif %}
+
 {%- if 'web' in grains.roles %}
 # Configure PHP-FPM pools
 /etc/php5/fpm/pool.d/{{ environment }}-zed.conf:
