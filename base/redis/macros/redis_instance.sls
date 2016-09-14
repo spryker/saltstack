@@ -3,6 +3,10 @@
 #
 
 {% macro redis_instance(environment, environment_details, settings) -%}
+
+{% if 'skip_instance_setup' not in environment_details.redis %}
+
+
 /data/shop/{{ environment }}/shared/redis:
   file.directory:
     - user: redis
@@ -54,4 +58,6 @@ redis-server-{{ environment }}:
       - file: /data/logs/{{ environment }}/redis
     - watch_in:
       - service: {{ service_name }}
+
+{%- endif %}
 {%- endmacro %}

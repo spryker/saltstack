@@ -4,6 +4,8 @@
 
 {% macro elasticsearch_instance(environment, environment_details, settings) -%}
 
+{% if 'skip_instance_setup' not in environment_details.elasticsearch %}
+
 # Data directory
 /data/shop/{{ environment }}/shared/elasticsearch:
   file.directory:
@@ -129,4 +131,5 @@ elasticsearch-{{ environment }}:
       - file: /etc/elasticsearch-{{ environment }}/scripts
       - cmd: elasticsearch-{{ environment }}-systemctl-reload
 
+{%- endif %}
 {%- endmacro %}
