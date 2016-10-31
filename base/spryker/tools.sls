@@ -8,7 +8,7 @@
 
 reload-php-fpm:
   cmd.wait:
-    - name: service php5-fpm restart
+    - name: service php7.0-fpm restart
 
 reload-nginx:
   cmd.wait:

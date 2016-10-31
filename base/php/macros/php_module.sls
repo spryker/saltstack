@@ -6,15 +6,15 @@
 {% if enable %}
 enable-php-module-{{ name }}-for-{{ sapi }}:
   cmd.run:
-    - name: php5enmod -s {{ sapi }} {{ name }}
-    - unless: php5query -s {{ sapi }} -m {{ name }}
+    - name: phpenmod -v 7.0 -s {{ sapi }} {{ name }}
+    - unless: phpquery -v 7.0 -s {{ sapi }} -m {{ name }}
     - require:
-      - file: /etc/php5/mods-available/{{ name }}.ini
+      - file: /etc/php/7.0/mods-available/{{ name }}.ini
 {% else %}
 disable-php-module-{{ name }}-for-{{ sapi }}:
   cmd.run:
-    - name: php5dismod -s {{ sapi }} {{ name }}
-    - onlyif: php5query -s {{ sapi }} -m {{ name }}
+    - name: phpdismod -v 7.0 -s {{ sapi }} {{ name }}
+    - onlyif: phpquery -v 7.0 -s {{ sapi }} -m {{ name }}
 {% endif %}
 
 {% endmacro %}

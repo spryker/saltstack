@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe 'php' do
+  let(:path) { '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin' }
+
   describe service('php7.0-fpm') do
     it { should be_enabled }
     it { should be_running }
@@ -31,7 +33,7 @@ describe 'php' do
   end
 
   # Commands from README.md for enabling / disabling xdebug
-  describe command('phpenmod -v 7.0 -s cli -m xdebug; phpenmod -v 7.0 -s fpm -m xdebug; service php7.0-fpm restart; php -v') do
+  describe command('phpenmod -v 7.0 -s cli -m xdebug; phpenmod -v 7.0 -s fpm -m xdebug && service php7.0-fpm restart && php -v') do
     its(:stdout) { should include('with Xdebug') }
   end
 
