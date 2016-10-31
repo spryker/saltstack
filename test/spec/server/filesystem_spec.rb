@@ -6,6 +6,6 @@ describe 'Filesystems' do
   end
 
   describe file('/data/shop/development/current') do
-     it { should be_mounted.with( :type => 'nfs' ) }
+     it { should be_mounted }
   end
 end
