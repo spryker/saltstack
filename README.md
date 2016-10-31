@@ -81,19 +81,19 @@ Background information: https://developer.github.com/guides/using-ssh-agent-forw
 
 ### IP Addresses and DNS records
 Spryker development VM uses some domains:
- - www.(com|de).spryker.dev
- - zed.(com|de).spryker.dev
- - static.(com|de).spryker.dev
- - www.(com|de).spryker.test
- - zed.(com|de).spryker.test
- - static.(com|de).spryker.test
-Those DNS records point to private IP address assigned to the VM - 10.10.0.66.
+ - www.de.demoshop.local
+ - zed.de.demoshop.local
+ - static.demoshop.local
+ - www-test.de.demoshop.local
+ - zed-test.de.demoshop.local
+ - static-test.demoshop.local
+Those DNS records point to private IP address assigned to the VM - `10.10.0.33`.
 The VM also includes valid wildcard SSL certificates for both domains.
 
-The self-signed SSL certificate for spryker.dev is already in the VM and Pound configuration.
+The self-signed SSL certificate for `*.local`, `*.*.local`, `*.*.*.local` and `*.*.*.*.local` is already in the VM and Pound configuration.
 
 ### Services in the VM:
-MailCatcher - http://kibana.spryker.dev:1080/
+MailCatcher - http://www.de.demoshop.local:1080/
 
 
 ### Notes for production deployments
@@ -202,5 +202,3 @@ Examples:
  - 15101 - Production ZED, USA, HTTP
  - 13007 - Staging Jenkins, HTTP (no store specified - jenkins runs per-environment)
  - 10005 - Development Elasticsearch, HTTP (no store specified)
-
-

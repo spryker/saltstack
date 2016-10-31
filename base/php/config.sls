@@ -3,15 +3,15 @@
 #
 
 # Web apps (FPM)
-/etc/php5/fpm/php.ini:
+/etc/php/7.0/fpm/php.ini:
   file.managed:
-    - source: salt://php/files/etc/php5/php.ini
+    - source: salt://php/files/etc/php/7.0/php.ini
     - require:
       - pkg: php
 
 # CLI
-/etc/php5/cli/php.ini:
+/etc/php/7.0/cli/php.ini:
   file.managed:
-    - source: salt://php/files/etc/php5/php.ini
+    - source: salt://php/files/etc/php/7.0/php.ini
     - require:
       - pkg: php

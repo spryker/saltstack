@@ -88,4 +88,5 @@ dev:
     - jenkins
     - redis
     - elasticsearch
+    - serverspec
     - spryker
