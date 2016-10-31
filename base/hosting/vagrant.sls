@@ -14,10 +14,7 @@ ufw:
   file.managed:
     - source: salt://hosting/files/vagrant/etc/resolv.conf
 
-/etc/hosts:
-  file.managed:
-    - source: salt://hosting/files/vagrant/etc/hosts
-    - template: jinja
+# Hosts file: nothing to do, we rely on vagrant-hostmanager
 
 # Disk drives: nothing to do, we're just using easy vagrant setup
 
