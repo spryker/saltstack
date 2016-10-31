@@ -10,9 +10,9 @@ describe 'nginx' do
     it { should be_listening }
   end
 
-  describe command('nginx -T') do
+  describe command('/usr/sbin/nginx -T') do
     its(:stderr) { should include('test is successful') }
-    its(:stdout) { should include('server_name www.ch.koalaa.dev') }
-    its(:stdout) { should include('server_name zed.ch.koalaa.dev') }
+    its(:stdout) { should match(/server_name.*www.*de.*local/) }
+    its(:stdout) { should match(/server_name.*zed.*de.*local/) }
   end
 end

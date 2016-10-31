@@ -3,7 +3,7 @@ require 'rspec/core/rake_task'
 
 SPEC_SUITES = [
   { id: 'server', pattern: 'spec/server/*_spec.rb' },
-`]
+]
 
 task :spec    => 'spec:all'
 task :default => :spec
