@@ -5,7 +5,9 @@
 {% macro redis_instance(environment, environment_details, settings) -%}
 
 {% if 'skip_instance_setup' not in environment_details.redis %}
-
+/tmp/b-{{ environment }}:
+  file.managed:
+    - contents: {{ environment_details }}
 
 /data/shop/{{ environment }}/shared/redis:
   file.directory:

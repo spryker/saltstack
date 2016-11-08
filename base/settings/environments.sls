@@ -30,8 +30,8 @@
 # Not using Redis-as-a-Service?
 {%- if salt['pillar.get']('hosting:external_redis', '') == '' %}
 # Generate Redis ports
-{%- do environments[environment].update ({
-      'redis': { 'port': '1' + port['environment'][environment]['port'] + '00' + '9' }
+{%- do environments[environment].redis.update ({
+      'port': '1' + port['environment'][environment]['port'] + '00' + '9'
 }) %}
 {%- else %}
 {%- do environments[environment].update ({
