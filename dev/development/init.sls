@@ -25,6 +25,14 @@ clone-oh-my-zsh:
     - mode: 600
     - replace: False
 
+/home/vagrant/.zsh_prompt:
+  file.managed:
+    - source: salt://development/files/home/vagrant/.zsh_prompt
+    - user: vagrant
+    - group: vagrant
+    - mode: 644
+    - replace: False
+
 /home/vagrant/.zlogin:
   file.managed:
     - source: salt://development/files/home/vagrant/.zlogin
