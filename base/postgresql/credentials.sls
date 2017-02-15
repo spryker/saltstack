@@ -7,6 +7,17 @@
 # For each environment we create user and two databases (zed + dump), which
 # have the owner set to this user.
 
+# Create admin account, if configured in pillar
+{%- if salt['pillar.get']('postgresql:superuser', False) %}
+postgres_users_admin:
+  postgres_user.present:
+    - name: {{ pillar.postgresql.superuser.username }}
+    - password: {{ pillar.postgresql.superuser.password }}
+    - superuser: True
+    - require:
+      - service: postgresql
+{%- endif %}
+
 {%- from 'settings/init.sls' import settings with context %}
 {%- for environment, environment_details in settings.environments.items() %}
 {%- for store in pillar.stores %}
