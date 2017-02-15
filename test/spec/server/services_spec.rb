@@ -24,7 +24,7 @@ describe 'Active services' do
 end
 
 dead_services = [
-  #'redis-server',
+  'redis-server',
   'elasticsearch',
   'jenkins',
 ]

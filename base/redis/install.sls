@@ -36,8 +36,17 @@ redis-services:
       - file: /etc/redis/redis.conf
 
 {%- else %}
-redis-service:
+redis-service-disable:
+  service.disabled:
+    - name: redis-server
+
+redis-service-dead:
   service.dead:
     - name: redis-server
-    - enable: False
+
+# Try harder, because service.disabled doesn't seem to be good enough
+redis-service-disable-really:
+  cmd.run:
+    - name: systemctl disable redis-server
+    - onlyif: systemctl is-enabled redis-server
 {%- endif %}
