@@ -5,7 +5,7 @@
 elasticsearch-requirements:
   pkg.installed:
     - pkgs:
-      - openjdk-8-jre
+      - openjdk-8-jre-headless
 
 elasticsearch:
   pkg.installed:
