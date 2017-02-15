@@ -87,6 +87,7 @@ dev:
     - pound
     - jenkins
     - redis
+    - samba
     - elasticsearch
     - serverspec
     - spryker
