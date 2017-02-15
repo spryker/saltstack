@@ -28,6 +28,14 @@ postgres_database_{{ store }}_{{ environment }}_zed:
       - service: postgresql
       - postgres_user: {{ settings.environments[environment].stores[store].zed.database.username }}
 
+# Add citext extension to the database
+postgres_database_citext_{{ store }}_{{ environment }}_zed:
+  postgres_extension.present:
+    - name: citext
+    - maintenance_db: {{ settings.environments[environment].stores[store].zed.database.database }}
+    - require:
+      - postgres_database: postgres_database_{{ store }}_{{ environment }}_zed
+
 # create database - dump
 postgres_database_{{ store }}_{{ environment }}_zed_dump:
   postgres_database.present:
@@ -36,6 +44,14 @@ postgres_database_{{ store }}_{{ environment }}_zed_dump:
     - require:
       - service: postgresql
       - postgres_user: {{ settings.environments[environment].stores[store].zed.database.username }}
+
+postgres_database_citext_{{ store }}_{{ environment }}_zed_dump:
+  postgres_extension.present:
+    - name: citext
+    - maintenance_db: {{ settings.environments[environment].stores[store].dump.database.database }}
+    - require:
+      - postgres_database: postgres_database_{{ store }}_{{ environment }}_zed_dump
+
 
 {% endfor %}
 {% endfor %}
