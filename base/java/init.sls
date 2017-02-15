@@ -3,8 +3,9 @@
 #
 
 ca-certificates-java:
-  pkg.installed:
+  pkg.latest:
     - fromrepo: jessie-backports
+    - refresh: False
 
 java:
   pkg.installed:
