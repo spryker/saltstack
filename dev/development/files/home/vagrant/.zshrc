@@ -4,7 +4,7 @@
 
 ZSH=$HOME/.oh-my-zsh
 ZSH_THEME="robbyrussell"
-plugins=(composer git redis-cli spryker sudo)
+plugins=(composer gitfast redis-cli spryker sudo)
 source $ZSH/oh-my-zsh.sh
 [ -f $HOME/.zsh_prompt ] && source $HOME/.zsh_prompt
 export PATH=$PATH:$HOME/bin
