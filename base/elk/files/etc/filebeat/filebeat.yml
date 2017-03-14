@@ -22,7 +22,7 @@ output:
   elasticsearch:
     hosts: ["localhost:10005"]
     protocol: "http"
-    index: "filebeat"
+    index: "logstash"
 
 shipper:
 
