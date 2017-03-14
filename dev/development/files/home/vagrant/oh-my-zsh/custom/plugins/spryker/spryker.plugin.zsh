@@ -5,7 +5,7 @@ alias cu='php -d xdebug.remote_enable=0 composer.phar update'
 alias debug='XDEBUG_CONFIG="remote_host=10.10.0.1" PHP_IDE_CONFIG="serverName=zed.de.spryker.dev"'
 
 codecept () {
-    APPLICATION_ENV=development APPLICATION_STORE=DE /data/shop/development/current/vendor/bin/codecept run $*
+    APPLICATION_ENV=development APPLICATION_STORE=DE /data/shop/development/current/vendor/bin/codecept $*
 }
 
 debug-console () {
