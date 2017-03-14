@@ -3,7 +3,7 @@
 #
 
 filebeat-install:
-  pkg.present:
+  pkg.installed:
     - name: filebeat
 
 filebeat-service:
