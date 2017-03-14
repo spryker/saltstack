@@ -50,6 +50,16 @@ elasticsearch-repo:
     - watch_in:
        - cmd: apt-get-update
 
+beats-repo:
+  pkgrepo.managed:
+    - humanname: Official Beats Repository
+    - name: deb https://packages.elastic.co/beats/apt stable main
+    - file: /etc/apt/sources.list.d/beats.list
+    - key_url: http://packages.elasticsearch.org/GPG-KEY-elasticsearch
+    - refresh_db: False
+    - watch_in:
+       - cmd: apt-get-update
+
 {{ grains.lsb_distrib_codename }}-backports-repo:
   pkgrepo.managed:
     - humanname: Debian {{ grains.lsb_distrib_codename }} Backports repository
