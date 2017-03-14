@@ -7,22 +7,28 @@
 libsqlite3-dev:
   pkg.installed:
     - require_in:
-      - pkg: mailcatcher
-
-mailcatcher-init-script:
-  file.managed:
-    - name: /etc/init.d/mailcatcher
-    - mode: 0755
-    - source: salt://mailcatcher/files/etc/init.d/mailcatcher
+      - gem: mailcatcher
 
 mailcatcher:
-  gem:
-    - installed
+  gem.installed
+
+mailcatcher-systemd-script:
+  file.managed:
+    - name: /etc/systemd/system/mailcatcher.service
+    - mode: 0755
+    - source: salt://mailcatcher/files/etc/systemd/system/mailcatcher.service
+    - watch_in:
+      - cmd: mailcatcher-systemd-reload
+
+mailcatcher-systemd-reload:
+  cmd.wait:
+    - name: systemctl daemon-reload
 
 mailcatcher-service:
   service.running:
     - name: mailcatcher
     - enable: True
     - require:
-      - file: mailcatcher-init-script
+      - file: mailcatcher-systemd-script
       - gem: mailcatcher
+      - cmd: mailcatcher-systemd-reload
