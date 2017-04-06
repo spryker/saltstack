@@ -109,6 +109,16 @@ postgresql-repo:
     - watch_in:
        - cmd: apt-get-update
 
+php-repo:
+  pkgrepo.managed:
+    - humanname: PHP7.1 repository
+    - name: deb https://packages.sury.org/php/ {{ grains.lsb_distrib_codename }} main
+    - file: /etc/apt/sources.list.d/php.list
+    - key_url: https://packages.sury.org/php/apt.gpg
+    - refresh_db: False
+    - watch_in:
+       - cmd: apt-get-update
+
 rabbitmq-repo:
   pkgrepo.managed:
     - humanname: RabbitMQ repository

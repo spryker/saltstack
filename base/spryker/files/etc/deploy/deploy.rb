@@ -2,7 +2,7 @@
 #
 # Spryker - Application deployment
 #
-# author: Marek Obuchowicz <marek.obuchowicz@project-a.com>
+# author: Marek Obuchowicz <marek@korekontrol.eu>
 #
 
 
@@ -362,7 +362,7 @@ end
 
 def activate_release
   put_status "Activating new release"
-  restart_fpm_command = "/etc/init.d/php7.0-fpm restart"
+  restart_fpm_command = "/etc/init.d/php7.1-fpm restart"
   web_hosts = $web_hosts || $zed_hosts
   app_hosts = $app_hosts || $zed_hosts
   app_only_hosts = app_hosts - web_hosts

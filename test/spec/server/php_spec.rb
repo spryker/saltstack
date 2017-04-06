@@ -2,8 +2,9 @@ require 'spec_helper'
 
 describe 'php' do
   let(:path) { '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin' }
+  PHP_VERSION='7.1'
 
-  describe service('php7.0-fpm') do
+  describe service("php${PHP_VERSION}-fpm") do
     it { should be_enabled }
     it { should be_running }
   end
@@ -14,7 +15,7 @@ describe 'php' do
 
   # By default xdebug is disabled
   describe command('php -v') do
-    its(:stdout) { should include('PHP 7.0') }
+    its(:stdout) { should include("PHP ${PHP_VERSION}") }
     its(:stdout) { should include('with Zend OPcache') }
     its(:stdout) { should_not include('with Xdebug') }
   end
@@ -25,7 +26,7 @@ describe 'php' do
     its(:stderr) { should_not include('ERROR') }
   end
 
-  describe command('php-fpm7.0 -i') do
+  describe command("php-fpm${PHP_VERSION} -i") do
     its(:stdout) { should include('opcache.enable => On => On') }
     its(:stderr) { should_not include('NOTICE') }
     its(:stderr) { should_not include('WARNING') }
@@ -33,11 +34,11 @@ describe 'php' do
   end
 
   # Commands from README.md for enabling / disabling xdebug
-  describe command('phpenmod -v 7.0 -s cli -m xdebug; phpenmod -v 7.0 -s fpm -m xdebug && service php7.0-fpm restart && php -v') do
+  describe command("phpenmod -v ${PHP_VERSION} -s cli -m xdebug; phpenmod -v ${PHP_VERSION} -s fpm -m xdebug && service php${PHP_VERSION}-fpm restart && php -v") do
     its(:stdout) { should include('with Xdebug') }
   end
 
-  describe command('phpdismod -v 7.0 -s cli -m xdebug; phpdismod -v 7.0 -s fpm -m xdebug; service php7.0-fpm restart; php -v') do
+  describe command("phpdismod -v ${PHP_VERSION} -s cli -m xdebug; phpdismod -v ${PHP_VERSION} -s fpm -m xdebug; service php${PHP_VERSION}-fpm restart; php -v") do
     its(:stdout) { should_not include('with Xdebug') }
   end
 
