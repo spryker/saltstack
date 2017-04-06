@@ -34,11 +34,11 @@ describe 'php' do
   end
 
   # Commands from README.md for enabling / disabling xdebug
-  describe command("phpenmod -v #{PHP_VERSION} -s cli -m xdebug; phpenmod -v #{PHP_VERSION} -s fpm -m xdebug && service php#{PHP_VERSION}-fpm restart && php -v") do
+  describe command("phpenmod -v #{PHP_VERSION} -s cli xdebug; phpenmod -v #{PHP_VERSION} -s fpm xdebug && service php#{PHP_VERSION}-fpm restart && php -v") do
     its(:stdout) { should include('with Xdebug') }
   end
 
-  describe command("phpdismod -v #{PHP_VERSION} -s cli -m xdebug; phpdismod -v #{PHP_VERSION} -s fpm -m xdebug; service php#{PHP_VERSION}-fpm restart; php -v") do
+  describe command("phpdismod -v #{PHP_VERSION} -s cli xdebug; phpdismod -v #{PHP_VERSION} -s fpm xdebug; service php#{PHP_VERSION}-fpm restart; php -v") do
     its(:stdout) { should_not include('with Xdebug') }
   end
 
