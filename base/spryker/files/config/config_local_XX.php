@@ -3,9 +3,10 @@
  * !!! This file is maintained by salt. Do not modify this file, as the changes will be overwritten!
  *
  */
-use Spryker\Shared\Propel\ApplicationConstants;
+use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Propel\PropelConstants;
-use Spryker\Shared\Propel\SessionConstants;
+use Spryker\Shared\Session\SessionConstants;
+use Spryker\Shared\PropelQueryBuilder\PropelQueryBuilderConstants;
 
 $environment = '{{ environment }}';
 
@@ -15,7 +16,9 @@ $config[PropelConstants::ZED_DB_PASSWORD] =                   '{{ settings.envir
 $config[PropelConstants::ZED_DB_DATABASE] =                   '{{ settings.environments[environment].stores[store].zed.database.database }}';
 $config[PropelConstants::ZED_DB_HOST] =                       '{{ settings.environments[environment].stores[store].zed.database.hostname }}';
 $config[PropelConstants::ZED_DB_PORT] =                       5432;
-//$config[ApplicationConstants::PROPEL]['database']['connections']['default']['dsn'] = 'mysql:host=' . $config[ApplicationConstants::ZED_DB_HOST]  . ';dbname=' . $config[ApplicationConstants::ZED_DB_DATABASE];
+$config[PropelConstants::ZED_DB_ENGINE]
+    = $config[PropelQueryBuilderConstants::ZED_DB_ENGINE]
+    = $config[PropelConstants::ZED_DB_ENGINE_PGSQL];
 
 
 /** Public URL's and domains */
