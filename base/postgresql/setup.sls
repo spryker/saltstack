@@ -37,7 +37,7 @@ data-dir:
     - require:
       - pkg: postgresql
   cmd.run:
-    - name: /etc/init.d/postgresql stop && rm -f /etc/postgresql/9.6/main/* && pg_createcluster --datadir /data/pgsql 9.6 main
+    - name: /etc/init.d/postgresql stop && rm -rf /etc/postgresql/9.6/main/* && pg_createcluster --datadir /data/pgsql 9.6 main
     - unless: test -d /data/pgsql/base
     - cwd: /data/pgsql
     - require:

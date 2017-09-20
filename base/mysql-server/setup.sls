@@ -8,7 +8,7 @@ mysql-server:
     - pkgs:
       - mysql-community-server
       - mysql-community-client
-      - libmysqlclient18
+      - libmysqlclient20
 
 mysql:
   service.running:
