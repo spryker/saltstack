@@ -7,7 +7,7 @@ jenkins:
   pkg.installed:
     - hold: True
     - sources:
-      - jenkins: http://pkg.jenkins-ci.org/debian-stable/binary/jenkins_1.651.1_all.deb
+      - jenkins: http://pkg.jenkins-ci.org/debian-stable/binary/jenkins_1.651.3_all.deb
 
 disable-jenkins-service:
   service.dead:
