@@ -3,13 +3,16 @@
 #
 
 # Install package and setup service
-nginx:
+install-nginx:
   pkg.installed:
-    - name: nginx-extras
-  service:
-    - running
+    - pkgs:
+      - nginx-extras
+      - libnginx-mod-http-headers-more-filter
+
+nginx:
+  service.running:
     - require:
-      - pkg: nginx-extras
+      - pkg: install-nginx
     - watch:
       - file: /etc/nginx/nginx.conf
 
@@ -22,12 +25,16 @@ apache2-utils:
   file.managed:
     - source: salt://nginx/files/etc/nginx/nginx.conf
     - template: jinja
+    - require:
+      - pkg: install-nginx
 
 # Global includes
 /etc/nginx/conf.d:
   file.recurse:
     - source: salt://nginx/files/etc/nginx/conf.d
     - template: jinja
+    - require:
+      - pkg: install-nginx
     - watch_in:
       - service: nginx
 
@@ -35,6 +42,8 @@ apache2-utils:
 /etc/nginx/fastcgi_params:
   file.managed:
     - source: salt://nginx/files/etc/nginx/fastcgi_params
+    - require:
+      - pkg: install-nginx
     - watch_in:
       - service: nginx
 
@@ -45,10 +54,12 @@ apache2-utils:
     - group: www-data
     - mode: 640
     - require:
-      - pkg: nginx-extras
+      - pkg: install-nginx
 
 # Delete default vhost
 /etc/nginx/sites-enabled/default:
   file.absent:
+    - require:
+      - pkg: install-nginx
     - watch_in:
       - service: nginx
