@@ -6,6 +6,6 @@ describe 'nodejs' do
   end
 
   describe command('/usr/bin/yarn --version') do
-    its(:stdout) { should include('0.') }
+    its(:stdout) { should include('1.') }
   end
 end
