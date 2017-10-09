@@ -3,8 +3,9 @@
 #
 
 {% set ruby_package_name = {
-    'wheezy': 'ruby1.9.1',
-    'jessie': 'ruby',
+    'stretch': 'ruby',
+    'wheezy':  'ruby1.9.1',
+    'jessie':  'ruby',
 }.get(grains.lsb_distrib_codename) %}
 
 ruby:
