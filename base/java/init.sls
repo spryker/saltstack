@@ -4,7 +4,7 @@
 
 ca-certificates-java:
   pkg.latest:
-    - fromrepo: jessie-backports
+    - fromrepo: {{ grains.lsb_distrib_codename }}-backports
     - refresh: False
 
 java:
