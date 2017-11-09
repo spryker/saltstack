@@ -1,5 +1,6 @@
 # This repository is DEPRECATED
-Contents has been moved to [devvm](https://github.com/spryker/devvm/tree/master/saltstack)
+Contents has been moved to [devvm](https://github.com/spryker/devvm/tree/master/saltstack) on 9.11.2017
+
 
 
 # Reference saltstack repository for Spryker
