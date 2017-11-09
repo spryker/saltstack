@@ -1,3 +1,7 @@
+# This repository is DEPRECATED
+Contents has been moved to [devvm](https://github.com/spryker/devvm/tree/master/saltstack)
+
+
 # Reference saltstack repository for Spryker
 This repository contains salt states (implementation) for Spryker SaltStack.
 It is a reference repository, which should be cloned and used as a base for
